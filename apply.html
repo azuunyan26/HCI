@@ -7,16 +7,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Hustler's Unversity | Application Form</title>
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+		crossorigin="anonymous" />
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/login.css">
 	<link rel="icon" type="image/x-icon" href="images/HUlogo.png">
 	<style>
 		/* ── Navbar ── */
-		.navbar-1 { transition: all 0.3s; }
+		.navbar-1 {
+			transition: all 0.3s;
+		}
 
 		/* ── Page body ── */
-		* { box-sizing: border-box; }
+		* {
+			box-sizing: border-box;
+		}
 
 		body {
 			background-color: #1a1a1a;
@@ -99,7 +105,9 @@
 			transition: border-color 0.2s, box-shadow 0.2s;
 		}
 
-		.form-control::placeholder { color: #666; }
+		.form-control::placeholder {
+			color: #666;
+		}
 
 		.form-control:focus {
 			border-color: #dc3545;
@@ -189,21 +197,36 @@
 			box-shadow: 0 6px 24px rgba(220, 53, 69, 0.6);
 		}
 
-		.btn-submit:active { background-color: #bd2130; }
+		.btn-submit:active {
+			background-color: #bd2130;
+		}
 
 		/* ── Success Modal Overlay ── */
 		.modal-overlay {
 			display: none;
 			position: fixed;
 			inset: 0;
-			background: rgba(0,0,0,0.8);
+			background: rgba(0, 0, 0, 0.8);
 			z-index: 9999;
 			align-items: center;
 			justify-content: center;
 			padding: 20px;
 		}
-		.modal-overlay.show { display: flex; animation: fadeIn 0.25s ease; }
-		@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+		.modal-overlay.show {
+			display: flex;
+			animation: fadeIn 0.25s ease;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
 
 		.success-modal {
 			background: #181818;
@@ -213,65 +236,161 @@
 			width: 100%;
 			padding: 48px 40px 40px;
 			text-align: center;
-			box-shadow: 0 0 60px rgba(220,53,69,0.35);
-			animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
+			box-shadow: 0 0 60px rgba(220, 53, 69, 0.35);
+			animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 		}
-		@keyframes slideUp { from { transform:translateY(40px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+
+		@keyframes slideUp {
+			from {
+				transform: translateY(40px);
+				opacity: 0;
+			}
+
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
 
 		.modal-icon-ring {
-			width: 72px; height: 72px; border-radius: 50%;
-			background: rgba(220,53,69,0.12);
-			border: 2px solid rgba(220,53,69,0.4);
-			display: flex; align-items: center; justify-content: center;
+			width: 72px;
+			height: 72px;
+			border-radius: 50%;
+			background: rgba(220, 53, 69, 0.12);
+			border: 2px solid rgba(220, 53, 69, 0.4);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			margin: 0 auto 20px;
-			font-size: 28px; color: #dc3545;
+			font-size: 28px;
+			color: #dc3545;
 		}
+
 		.modal-tag {
-			font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-			color: #dc3545; background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.25);
-			display: inline-block; padding: 4px 14px; border-radius: 100px; margin-bottom: 14px;
+			font-size: 0.68rem;
+			font-weight: 700;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+			color: #dc3545;
+			background: rgba(220, 53, 69, 0.1);
+			border: 1px solid rgba(220, 53, 69, 0.25);
+			display: inline-block;
+			padding: 4px 14px;
+			border-radius: 100px;
+			margin-bottom: 14px;
 		}
-		.success-modal h2 { font-size: 1.55rem; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.2; }
-		.success-modal .modal-body-text { font-size: 0.87rem; color: #999; line-height: 1.75; margin-bottom: 0; }
-		.modal-divider { border: none; border-top: 1px solid #2c2c2c; margin: 26px 0; }
-		.modal-actions { display: flex; flex-direction: column; gap: 10px; }
+
+		.success-modal h2 {
+			font-size: 1.55rem;
+			font-weight: 700;
+			color: #fff;
+			margin-bottom: 10px;
+			line-height: 1.2;
+		}
+
+		.success-modal .modal-body-text {
+			font-size: 0.87rem;
+			color: #999;
+			line-height: 1.75;
+			margin-bottom: 0;
+		}
+
+		.modal-divider {
+			border: none;
+			border-top: 1px solid #2c2c2c;
+			margin: 26px 0;
+		}
+
+		.modal-actions {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
 
 		.btn-go-home {
-			display: block; width: 100%;
-			background: #dc3545; color: #fff;
-			border: none; border-radius: 8px; padding: 14px;
-			font-size: 0.88rem; font-weight: 700; font-family: 'Quicksand', sans-serif;
-			letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none;
-			cursor: pointer; transition: background 0.2s, box-shadow 0.2s;
-			box-shadow: 0 4px 18px rgba(220,53,69,0.4);
+			display: block;
+			width: 100%;
+			background: #dc3545;
+			color: #fff;
+			border: none;
+			border-radius: 8px;
+			padding: 14px;
+			font-size: 0.88rem;
+			font-weight: 700;
+			font-family: 'Quicksand', sans-serif;
+			letter-spacing: 1.5px;
+			text-transform: uppercase;
+			text-decoration: none;
+			cursor: pointer;
+			transition: background 0.2s, box-shadow 0.2s;
+			box-shadow: 0 4px 18px rgba(220, 53, 69, 0.4);
 		}
-		.btn-go-home:hover { background: #c82333; color: #fff; text-decoration: none; box-shadow: 0 6px 24px rgba(220,53,69,0.55); }
+
+		.btn-go-home:hover {
+			background: #c82333;
+			color: #fff;
+			text-decoration: none;
+			box-shadow: 0 6px 24px rgba(220, 53, 69, 0.55);
+		}
 
 		.btn-close-modal {
-			display: block; width: 100%;
-			background: transparent; color: #555;
-			border: 1px solid #2c2c2c; border-radius: 8px; padding: 13px;
-			font-size: 0.82rem; font-weight: 700; font-family: 'Quicksand', sans-serif;
-			letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+			display: block;
+			width: 100%;
+			background: transparent;
+			color: #555;
+			border: 1px solid #2c2c2c;
+			border-radius: 8px;
+			padding: 13px;
+			font-size: 0.82rem;
+			font-weight: 700;
+			font-family: 'Quicksand', sans-serif;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			cursor: pointer;
 			transition: border-color 0.2s, color 0.2s;
 		}
-		.btn-close-modal:hover { border-color: #444; color: #aaa; }
+
+		.btn-close-modal:hover {
+			border-color: #444;
+			color: #aaa;
+		}
 
 		/* ── Error Toast ── */
 		.toast-error {
-			position: fixed; bottom: 28px; left: 50%;
+			position: fixed;
+			bottom: 28px;
+			left: 50%;
 			transform: translateX(-50%) translateY(80px);
-			background: #1e1e1e; border: 1px solid #dc3545; border-left: 4px solid #dc3545;
-			border-radius: 10px; padding: 14px 22px;
-			display: flex; align-items: center; gap: 12px;
-			font-size: 0.84rem; color: #eee; font-weight: 600;
-			z-index: 9998; opacity: 0;
-			transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
-			box-shadow: 0 8px 32px rgba(0,0,0,0.5); pointer-events: none;
+			background: #1e1e1e;
+			border: 1px solid #dc3545;
+			border-left: 4px solid #dc3545;
+			border-radius: 10px;
+			padding: 14px 22px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			font-size: 0.84rem;
+			color: #eee;
+			font-weight: 600;
+			z-index: 9998;
+			opacity: 0;
+			transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+			pointer-events: none;
 			max-width: 90vw;
 		}
-		.toast-error.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
-		.toast-error i { color: #dc3545; font-size: 15px; flex-shrink: 0; }
+
+		.toast-error.show {
+			transform: translateX(-50%) translateY(0);
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.toast-error i {
+			color: #dc3545;
+			font-size: 15px;
+			flex-shrink: 0;
+		}
 	</style>
 </head>
 
@@ -284,7 +403,8 @@
 		<div class="container">
 			<div class="navbar" id="navbar_1">
 				<div class="navbar-brand">
-					<img class="logo-img" src="images/HUlogo.png" style="filter: grayscale(1) contrast(200%) brightness(50%);">
+					<img class="logo-img" src="images/HUlogo.png"
+						style="filter: grayscale(1) contrast(200%) brightness(50%);">
 					<span class="logo-text">Hustler's Unversity [sic]</span>
 				</div>
 				<div class="menu"></div>
@@ -326,12 +446,14 @@
 
 			<div class="form-group">
 				<label for="full_name">Full Legal Name (as recognized by the Matrix):</label>
-				<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Chad Thundercock" required>
+				<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Chad Thundercock"
+					required>
 			</div>
 
 			<div class="form-group">
 				<label for="email">Email (your primary hustle channel):</label>
-				<input type="email" class="form-control" id="email" name="email" placeholder="alpha@hustlers.edu" required>
+				<input type="email" class="form-control" id="email" name="email" placeholder="alpha@hustlers.edu"
+					required>
 			</div>
 
 			<div class="form-group">
@@ -383,8 +505,10 @@
 			</div>
 
 			<div class="form-group">
-				<label for="manifesto">Why Hustler's Unversity? (Your manifesto. Max 500 characters of raw ambition. Show us your mindset.):</label>
-				<textarea class="form-control" id="manifesto" name="manifesto" rows="5" maxlength="500" required placeholder="I'm here to dominate, not just participate. My current environment lacks the unfiltered truth and sigma energy I need to truly ascend. I seek the knowledge to build my empire, escape the matrix, and never be a brokeboy again."></textarea>
+				<label for="manifesto">Why Hustler's Unversity? (Your manifesto. Max 500 characters of raw ambition.
+					Show us your mindset.):</label>
+				<textarea class="form-control" id="manifesto" name="manifesto" rows="5" maxlength="500" required
+					placeholder="I'm here to dominate, not just participate. My current environment lacks the unfiltered truth and sigma energy I need to truly ascend. I seek the knowledge to build my empire, escape the matrix, and never be a brokeboy again."></textarea>
 			</div>
 
 			<button type="submit" class="btn-submit">INITIATE ASCENSION PROTOCOL</button>
@@ -392,17 +516,19 @@
 		</form>
 	</div>
 
-	
+
 	<!-- SUCCESS MODAL -->
 	<div class="modal-overlay" id="successOverlay">
 		<div class="success-modal">
 			<div class="modal-icon-ring"><i class="fas fa-check"></i></div>
 			<div class="modal-tag">Application Received</div>
 			<h2>Ascension Initiated.</h2>
-			<p class="modal-body-text">Your raw ambition has been logged, future Hustler. We'll review your application and reach out shortly. Trust the process.</p>
+			<p class="modal-body-text">Your raw ambition has been logged, future Hustler. We'll review your application
+				and reach out shortly. Trust the process.</p>
 			<hr class="modal-divider">
 			<div class="modal-actions">
-				<a href="login.html" class="btn-go-home"><i class="fas fa-home" style="margin-right:8px;font-size:12px;"></i>Return to Homepage</a>
+				<a href="login.html" class="btn-go-home"><i class="fas fa-home"
+						style="margin-right:8px;font-size:12px;"></i>Return to Homepage</a>
 				<button class="btn-close-modal" onclick="closeModal()">Stay &amp; Review My Application</button>
 			</div>
 		</div>
@@ -431,7 +557,7 @@
 				// Show error toast
 				var errorToast = document.getElementById('errorToast');
 				errorToast.classList.add('show');
-				setTimeout(function() {
+				setTimeout(function () {
 					errorToast.classList.remove('show');
 				}, 4000);
 			} else {
