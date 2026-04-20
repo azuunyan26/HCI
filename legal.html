@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hustler's Unversity | Legal</title>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --accent: #4a90e2;
+            --accent-dim: rgba(74, 144, 226, 0.12);
+            --accent-glow: rgba(74, 144, 226, 0.35);
+            --bg: #111;
+            --surface: #181818;
+            --surface-2: #202020;
+            --surface-3: #2a2a2a;
+            --border: #2c2c2c;
+            --text: #f0f0f0;
+            --text-muted: #888;
+            --text-dim: #555;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            padding-top: 20px;
+            padding-bottom: 100px;
+        }
+
+        .navbar-1 {
+            transition: all 0.3s;
+        }
+
+        .legal-hero {
+            position: relative;
+            padding: 72px 20px 56px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .legal-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(74, 144, 226, 0.04) 39px, rgba(74, 144, 226, 0.04) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(74, 144, 226, 0.04) 39px, rgba(74, 144, 226, 0.04) 40px);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(74, 144, 226, 0.4);
+            color: var(--accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .hero-eyebrow i {
+            font-size: 11px;
+        }
+
+        .legal-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .legal-hero h1 em {
+            color: var(--red);
+            font-style: normal;
+        }
+
+        .legal-hero .hero-sub {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .hero-line {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 24px auto 0;
+            border-radius: 2px;
+        }
+
+        .legal-shell {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .legal-sidebar {
+            position: sticky;
+            top: 24px;
+        }
+
+        .sidebar-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding: 0 14px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-nav {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 18px;
+            background: none;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.18s;
+        }
+
+        .sidebar-btn:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-btn .sb-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--surface-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--text-dim);
+            flex-shrink: 0;
+            transition: all 0.18s;
+        }
+
+        .sidebar-btn:hover {
+            background: var(--surface-2);
+            color: #fff;
+        }
+
+        .sidebar-btn:hover .sb-icon {
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .sidebar-btn.active {
+            background: var(--accent-dim);
+            color: #fff;
+            border-left: 3px solid var(--accent);
+        }
+
+        .sidebar-btn.active .sb-icon {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .sb-arrow {
+            margin-left: auto;
+            font-size: 10px;
+            color: var(--text-dim);
+            transition: color 0.18s;
+        }
+
+        .sidebar-btn.active .sb-arrow,
+        .sidebar-btn:hover .sb-arrow {
+            color: var(--accent);
+        }
+
+        .sidebar-meta {
+            margin-top: 20px;
+            padding: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .sidebar-meta p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .sidebar-meta a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .legal-panel,
+        .panel-header,
+        .panel-body {
+            background-color: #000000b5;
+        }
+
+        .legal-panel {
+            background: var(--surface) !important;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 32px 40px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            background: var(--surface-2) !important;
+        }
+
+        .panel-header-left {
+            flex: 1;
+        }
+
+        .panel-tag {
+            display: inline-block;
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 10px;
+        }
+
+        .panel-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .panel-date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .panel-date i {
+            margin-right: 4px;
+        }
+
+        .panel-header-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .panel-body {
+            padding: 36px 40px 44px;
+        }
+
+        .legal-section {
+            display: none;
+        }
+
+        .legal-section.active {
+            display: block;
+        }
+
+        .content-block {
+            margin-bottom: 36px;
+        }
+
+        .content-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .block-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bh-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .content-block p {
+            font-size: 0.875rem;
+            color: #bbb;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .content-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-block p strong {
+            color: #e0e0e0;
+        }
+
+        .content-block ul {
+            padding-left: 0;
+            list-style: none;
+            margin-bottom: 12px;
+        }
+
+        .content-block ul li {
+            font-size: 0.875rem;
+            color: #bbb;
+            line-height: 1.7;
+            padding: 7px 0 7px 22px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .content-block ul li:last-child {
+            border-bottom: none;
+        }
+
+        .content-block ul li::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 15px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .content-block ul li strong {
+            color: #ddd;
+        }
+
+        .callout {
+            display: flex;
+            gap: 16px;
+            background: var(--surface-2);
+            border: 1px solid rgba(74, 144, 226, 0.25);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 10px 10px 0;
+            padding: 18px 20px;
+            margin-bottom: 28px;
+        }
+
+        .callout .callout-icon {
+            font-size: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .callout p {
+            font-size: 0.84rem;
+            color: #ccc;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .callout p strong {
+            color: #fff;
+        }
+
+        .contact-strip {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-top: 28px;
+        }
+
+        .cs-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .cs-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 3px;
+        }
+
+        .contact-strip p {
+            font-size: 0.83rem;
+            color: #ccc;
+            margin: 0;
+        }
+
+        .contact-strip a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .contact-strip a:hover {
+            text-decoration: underline;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 20px 0 28px;
+        }
+
+        .feature-card {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 16px;
+            transition: border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(74, 144, 226, 0.4);
+        }
+
+        .fc-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .fc-title {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #ddd;
+            margin-bottom: 6px;
+        }
+
+        .fc-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .s-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 28px 0;
+        }
+
+        .legal-footer {
+            max-width: 1080px;
+            margin: 36px auto 0;
+            padding: 24px 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border);
+        }
+
+        .legal-footer p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 720px) {
+            .legal-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .legal-sidebar {
+                position: static;
+            }
+
+            .sidebar-nav {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .sidebar-btn {
+                flex: 1 1 auto;
+                border-bottom: none;
+                border-right: 1px solid var(--border);
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .sidebar-btn .sb-text,
+            .sb-arrow {
+                display: none;
+            }
+
+            .sidebar-btn.active {
+                border-left: none;
+                border-bottom: 3px solid var(--red);
+            }
+
+            .panel-header {
+                padding: 24px 22px 20px;
+                flex-direction: column;
+            }
+
+            .panel-body {
+                padding: 24px 22px 32px;
+            }
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#navbar_1" data-offset="50">
+
+    <div class="container-fluid navbar-1">
+        <div class="container">
+            <div class="navbar" id="navbar_1">
+                <div class="navbar-brand">
+                    <img class="logo-img" src="images/HUlogo.png"
+                        style="filter: grayscale(1) contrast(200%) brightness(50%);">
+                    <span class="logo-text">Hustler's Unversity [sic]</span>
+                </div>
+                <div class="menu"></div>
+                <ul class="nav nav1">
+                    <div class="close-btn"></div>
+                    <li class="nav-item nav-item1"><a class="nav-link nav-link1 font-weight-bold"
+                            href="login.html#announcement">Gazette</a></li>
+                    <li class="nav-item nav-item1"><a class="nav-link nav-link1" href="login.html#calendar">Calendar</a>
+                    </li>
+                    <li class="nav-item nav-item1"><a class="nav-link nav-link1" href="login.html#about">Success
+                            Stories</a></li>
+                    <li class="nav-item nav-item1"><a class="nav-link nav-link1" href="login.html#faq">The Mindset</a>
+                    </li>
+                    <li class="nav-item nav-item1"><a class="nav-link nav-link1" href="apply.html">Apply Now</a></li>
+                    <li class="nav-item nav-item1">
+                        <a class="nav-link nav-link1" href="legal.html">Legal Terms</a>
+                    </li>
+            </div>
+        </div>
+    </div>
+
+    <div class="legal-hero">
+        <div class="hero-eyebrow"><i class="fas fa-balance-scale"></i> Legal Disclosures</div>
+        <h1>The <em>Fine Print</em><br>of Ascension</h1>
+        <p class="hero-sub">Last updated April 20, 2026 &nbsp;&middot;&nbsp; Hustler's Unversity [sic] Legal Division
+        </p>
+        <div class="hero-line"></div>
+    </div>
+
+    <div class="legal-shell">
+
+        <aside class="legal-sidebar">
+            <p class="sidebar-label">Documents</p>
+            <nav class="sidebar-nav">
+                <button class="sidebar-btn active" onclick="switchTab('privacy',this)">
+                    <span class="sb-icon"><i class="fas fa-shield-alt"></i></span>
+                    <span class="sb-text">Privacy Policy</span>
+                    <i class="fas fa-chevron-right sb-arrow"></i>
+                </button>
+                <button class="sidebar-btn" onclick="switchTab('terms',this)">
+                    <span class="sb-icon"><i class="fas fa-file-contract"></i></span>
+                    <span class="sb-text">Terms of Use</span>
+                    <i class="fas fa-chevron-right sb-arrow"></i>
+                </button>
+                <button class="sidebar-btn" onclick="switchTab('accessibility',this)">
+                    <span class="sb-icon"><i class="fas fa-universal-access"></i></span>
+                    <span class="sb-text">Accessibility</span>
+                    <i class="fas fa-chevron-right sb-arrow"></i>
+                </button>
+                <button class="sidebar-btn" onclick="switchTab('disclaimer',this)">
+                    <span class="sb-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                    <span class="sb-text">Disclaimer</span>
+                    <i class="fas fa-chevron-right sb-arrow"></i>
+                </button>
+            </nav>
+            <div class="sidebar-meta">
+                <p>Questions? <a href="mailto:legal@hustlers.edu">legal@hustlers.edu</a><br><br>All documents v1.0
+                    &middot; April 2026.</p>
+            </div>
+        </aside>
+
+        <main class="legal-panel">
+
+            <!-- PRIVACY -->
+            <div id="tab-privacy" class="legal-section active">
+                <div class="panel-header">
+                    <div class="panel-header-left">
+                        <span class="panel-tag">Document 1 of 4</span>
+                        <div class="panel-title">Privacy Policy</div>
+                        <p class="panel-date"><i class="fas fa-calendar"></i> Effective April 20, 2026</p>
+                    </div>
+                    <div class="panel-header-icon"><i class="fas fa-shield-alt"></i></div>
+                </div>
+                <div class="panel-body">
+                    <div class="callout">
+                        <i class="fas fa-bolt callout-icon"></i>
+                        <p><strong>TL;DR:</strong> We collect your data to process your application and operate the
+                            platform. We do not sell your personal information to any third party. You have the right to
+                            access, correct, or delete your data at any time.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">1</span> Information We Collect</div>
+                        <p>When you interact with Hustler's Unversity — through our website, application form, or
+                            student portal — we may collect the following:</p>
+                        <ul>
+                            <li><strong>Identity data:</strong> Full legal name, date of birth, and gender identity.
+                            </li>
+                            <li><strong>Contact data:</strong> Email address and phone number provided during
+                                registration or application.</li>
+                            <li><strong>Application data:</strong> Program preferences, personal statements, and current
+                                academic or career status.</li>
+                            <li><strong>Usage data:</strong> IP address, browser type, pages visited, and session
+                                duration collected via cookies and server logs.</li>
+                            <li><strong>Communications:</strong> Any correspondence sent to our support or
+                                administration channels.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">2</span> How We Use Your Information</div>
+                        <ul>
+                            <li>Processing and evaluating your application to the university.</li>
+                            <li>Communicating enrollment decisions, program updates, and important notices.</li>
+                            <li>Providing access to student portal features and course materials.</li>
+                            <li>Improving website functionality through anonymized analytics.</li>
+                            <li>Complying with applicable legal obligations.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">3</span> Data Sharing &amp; Third Parties</div>
+                        <p>We do <strong>not</strong> sell, rent, or trade your personal information. We may share data
+                            with trusted service providers under data processing agreements that bind them to equivalent
+                            privacy standards.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">4</span> Data Retention</div>
+                        <p>Application data is retained for 36 months from submission, or for the duration of your
+                            enrollment, whichever is longer. You may request earlier deletion at any time.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">5</span> Your Rights</div>
+                        <ul>
+                            <li>Access a copy of the personal data we hold about you.</li>
+                            <li>Correct inaccurate or incomplete data.</li>
+                            <li>Request deletion of your data (right to be forgotten).</li>
+                            <li>Restrict or object to certain processing activities.</li>
+                            <li>Lodge a complaint with your local data protection authority.</li>
+                        </ul>
+                    </div>
+                    <div class="contact-strip">
+                        <div class="cs-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <div class="cs-label">Privacy Contact</div>
+                            <p>Data Protection Officer &mdash; <a
+                                    href="mailto:privacy@hustlers.edu">privacy@hustlers.edu</a> &middot; Response within
+                                30 business days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TERMS -->
+            <div id="tab-terms" class="legal-section">
+                <div class="panel-header">
+                    <div class="panel-header-left">
+                        <span class="panel-tag">Document 2 of 4</span>
+                        <div class="panel-title">Terms of Use</div>
+                        <p class="panel-date"><i class="fas fa-calendar"></i> Effective April 20, 2026</p>
+                    </div>
+                    <div class="panel-header-icon"><i class="fas fa-file-contract"></i></div>
+                </div>
+                <div class="panel-body">
+                    <div class="callout">
+                        <i class="fas fa-exclamation-circle callout-icon"></i>
+                        <p><strong>Important:</strong> By accessing or using this website, you agree to be bound by
+                            these Terms. If you do not agree, please discontinue use immediately.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">1</span> Acceptance of Terms</div>
+                        <p>These Terms of Use constitute a legally binding agreement between you ("User") and Hustler's
+                            Unversity [sic] ("we," "us," "the Institution"). Access to and use of this website —
+                            including the application portal, student resources, and linked services — is conditioned
+                            upon your acceptance of these Terms.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">2</span> Permitted Use</div>
+                        <p>You may use this website solely for lawful, personal, and non-commercial purposes. You agree
+                            not to:</p>
+                        <ul>
+                            <li>Copy, reproduce, or redistribute any content without prior written permission.</li>
+                            <li>Attempt to gain unauthorized access to any portion of the site or its underlying
+                                systems.</li>
+                            <li>Introduce malware, bots, scrapers, or automated tools that disrupt normal operation.
+                            </li>
+                            <li>Submit false, misleading, or fraudulent information in any application or form.</li>
+                            <li>Harass, impersonate, or harm other users or staff of the Institution.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">3</span> Intellectual Property</div>
+                        <p>All content on this website — including text, graphics, logos, course materials, and the
+                            "Hustler's Unversity" name and branding — is the exclusive property of the Institution or
+                            its licensors and is protected by applicable intellectual property laws.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">4</span> User-Submitted Content</div>
+                        <p>By submitting application materials or personal statements, you grant us a non-exclusive,
+                            royalty-free license to use, store, and process that content as described in our Privacy
+                            Policy. You represent that all submitted content is your own original work.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">5</span> Limitation of Liability</div>
+                        <p>To the fullest extent permitted by applicable law, the Institution shall not be liable for
+                            any indirect, incidental, special, consequential, or punitive damages arising from your use
+                            of — or inability to use — this website or its content.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">6</span> Governing Law</div>
+                        <p>These Terms are governed by the laws of the Republic of the Philippines. Any disputes arising
+                            hereunder shall be subject to the exclusive jurisdiction of the courts of Quezon City.</p>
+                    </div>
+                    <div class="contact-strip">
+                        <div class="cs-icon"><i class="fas fa-gavel"></i></div>
+                        <div>
+                            <div class="cs-label">Legal Contact</div>
+                            <p>Questions about these Terms: <a href="mailto:legal@hustlers.edu">legal@hustlers.edu</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACCESSIBILITY -->
+            <div id="tab-accessibility" class="legal-section">
+                <div class="panel-header">
+                    <div class="panel-header-left">
+                        <span class="panel-tag">Document 3 of 4</span>
+                        <div class="panel-title">Accessibility Statement</div>
+                        <p class="panel-date"><i class="fas fa-calendar"></i> Effective April 20, 2026</p>
+                    </div>
+                    <div class="panel-header-icon"><i class="fas fa-universal-access"></i></div>
+                </div>
+                <div class="panel-body">
+                    <div class="callout">
+                        <i class="fas fa-check-circle callout-icon"></i>
+                        <p>Hustler's Unversity [sic] is committed to ensuring our website is accessible to all users,
+                            regardless of ability or technology. We strive to meet <strong>WCAG 2.1, Level AA</strong>
+                            across all pages.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">1</span> Our Commitments</div>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="fc-icon"><i class="fas fa-eye"></i></div>
+                                <div class="fc-title">Visual Accessibility</div>
+                                <p class="fc-desc">Sufficient contrast ratios, scalable text up to 200%, and
+                                    non-color-dependent information design.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="fc-icon"><i class="fas fa-keyboard"></i></div>
+                                <div class="fc-title">Keyboard Navigation</div>
+                                <p class="fc-desc">All interactive elements are fully operable via keyboard with clearly
+                                    visible focus indicators.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="fc-icon"><i class="fas fa-volume-up"></i></div>
+                                <div class="fc-title">Screen Readers</div>
+                                <p class="fc-desc">Semantic HTML, ARIA labels, and descriptive alt text support NVDA,
+                                    VoiceOver, and more.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="fc-icon"><i class="fas fa-mobile-alt"></i></div>
+                                <div class="fc-title">Responsive Design</div>
+                                <p class="fc-desc">The site adapts to all viewport sizes and touch interfaces for mobile
+                                    and tablet usability.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="fc-icon"><i class="fas fa-closed-captioning"></i></div>
+                                <div class="fc-title">Multimedia</div>
+                                <p class="fc-desc">Video and audio content produced by the Institution includes captions
+                                    or transcripts.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="fc-icon"><i class="fas fa-language"></i></div>
+                                <div class="fc-title">Plain Language</div>
+                                <p class="fc-desc">Content is written clearly and simply, targeting a reading level
+                                    accessible to a broad audience.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">2</span> Known Limitations</div>
+                        <p>While we strive for full WCAG 2.1 AA compliance, certain third-party embedded content may not
+                            yet meet all standards. We are actively working with vendors to remediate these gaps.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">3</span> Requesting Accommodations</div>
+                        <p>If you encounter accessibility barriers or require content in an alternative format, please
+                            contact us. We are committed to providing reasonable accommodations in a timely manner.</p>
+                    </div>
+                    <div class="contact-strip">
+                        <div class="cs-icon"><i class="fas fa-hands-helping"></i></div>
+                        <div>
+                            <div class="cs-label">Accessibility Support</div>
+                            <p><a href="mailto:access@hustlers.edu">access@hustlers.edu</a> &middot; Response within 5
+                                business days. Statement reviewed annually.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DISCLAIMER -->
+            <div id="tab-disclaimer" class="legal-section">
+                <div class="panel-header">
+                    <div class="panel-header-left">
+                        <span class="panel-tag">Document 4 of 4</span>
+                        <div class="panel-title">General Disclaimer</div>
+                        <p class="panel-date"><i class="fas fa-calendar"></i> Effective April 20, 2026</p>
+                    </div>
+                    <div class="panel-header-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                </div>
+                <div class="panel-body">
+                    <div class="callout">
+                        <i class="fas fa-theater-masks callout-icon"></i>
+                        <p><strong>Read carefully:</strong> Content on this website is provided for informational and
+                            entertainment purposes. Hustler's Unversity [sic] is a <strong>satirical parody
+                                institution</strong> and does not confer accredited academic degrees or professional
+                            certifications.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">1</span> Parody &amp; Satirical Nature</div>
+                        <p>Hustler's Unversity [sic] is a work of parody and satire. All program names, titles, course
+                            descriptions, and motivational language are fictional and intended for comedic and creative
+                            purposes only. Any resemblance to real institutions, living individuals, or actual programs
+                            is purely coincidental.</p>
+                        <p>The intentional misspelling of "Unversity" is a deliberate part of the parody and carries no
+                            representation of a legitimate accredited institution.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">2</span> No Professional Advice</div>
+                        <p>Nothing on this website constitutes financial, legal, career, investment, or academic advice.
+                            Content regarding hustle culture, entrepreneurship, or personal development is satirical in
+                            nature. For genuine advice, please consult qualified professionals.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">3</span> No Guarantees of Outcome</div>
+                        <p>We make no guarantee that any user who engages with this website will achieve financial
+                            independence, entrepreneurial success, or any personal goals referenced in our satirical
+                            content. "Success Stories" depicted are fictional and for comedic illustration only.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">4</span> Third-Party Links</div>
+                        <p>This website may contain links to external sites for informational or satirical purposes. We
+                            do not endorse, control, or accept responsibility for third-party content. Accessing
+                            external links is at your own risk.</p>
+                    </div>
+                    <div class="content-block">
+                        <div class="block-heading"><span class="bh-num">5</span> Technical Accuracy</div>
+                        <p>While we make reasonable efforts to keep information current, we provide no warranty of
+                            accuracy, completeness, or fitness for any purpose. Content may be updated or removed at any
+                            time without notice.</p>
+                    </div>
+                    <div class="contact-strip">
+                        <div class="cs-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div>
+                            <div class="cs-label">Real Concerns?</div>
+                            <p>If you have genuine concerns about this website's content, reach out at <a
+                                    href="mailto:legal@hustlers.edu">legal@hustlers.edu</a>. We take all reasonable
+                                concerns seriously.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="legal-footer">
+        <p>&copy; 2026 Hustler's Unversity [sic]. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="login.html">Home</a>
+            <a href="apply.html">Apply</a>
+            <a href="alpha_exam.html">Alpha Exam</a>
+            <a href="legal.html">Legal</a>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        function switchTab(name, btn) {
+            document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            btn.classList.add('active');
+            document.querySelector('.legal-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+
+</html>

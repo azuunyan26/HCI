@@ -1,0 +1,653 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+html,body{
+    font-family: 'Roboto', sans-serif;
+}
+.navbar-1{
+    background-color: #000;
+}
+
+.navbar-brand,.nav-link{
+    color: #fff !important;
+    text-transform: uppercase;
+}
+.logo-img{
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+.logo-text{
+    font-size: 18px;
+}
+.nav-item1 .nav-link{
+    padding-right: 0;
+}
+
+.nav-item1:last-child i{
+    margin-left: 5px;
+}
+.nav-text{
+    display: none;
+}
+.nav-1{
+    display: flex;
+    width: auto;
+}
+div{
+    transition: ease 0.5s;
+}
+.section-1{
+    padding:0 !important;
+    margin-bottom: 100px;
+}
+.tab-nav{
+    padding-top: 15px;
+}
+.act{
+    padding-top: 15px;
+    height: 100px;
+}
+.nav-tabs{
+    border-bottom: 1px solid #33383E;
+}
+.modules,.calendar{
+    padding-left: 0;
+    font-weight: bold;
+    color: #000;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    text-transform: uppercase;
+}
+.modules:hover,.calendar:hover{
+    color: #000;
+    border-bottom: solid #000 !important;
+}
+.nav-link span{
+    margin-left: 5px;
+    border-radius: 50%;
+}
+.active{
+    border-bottom: 2px solid #000 !important;
+    background-color: transparent !important;
+}
+.tab-pane{
+    border-bottom: none !important;
+}
+.card{
+    border-radius: 1em;
+    margin-bottom: 10px;
+    border: none;
+}
+.card-header{
+    height: 100px;
+
+}
+
+.btn-link{
+    position: relative;
+    top: -15px;
+    margin-right: -18px;
+    float: right;
+}
+.btn-link:focus{
+    box-shadow: none !important;
+}
+.btn-link i{
+    font-size: 20px;
+    color: #fff;
+}
+.accordion-h{
+    margin: 10px 0px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.title,.subject,.schedule{
+    text-transform: uppercase;
+    color: #fff;
+    display: block;
+    margin-left: -10px;
+}
+.subject,.schedule{
+   font-size: 15px;
+}
+.title{
+    display: block;
+    text-transform: uppercase;
+    font-size: 25px;
+}
+.card{
+  border-radius: 0.5rem !important;
+}
+.card-header{
+  height: 105px;
+  cursor: pointer;
+}
+.card-body{
+    background-color: rgb(245, 239, 239);
+}
+.accordion-contents{
+    cursor: pointer;
+    font-size: 13px;
+}
+.accordion-contents i{
+    padding-right: 5px;
+    font-size: 20px;
+}
+.accordion-contents .fa-file-powerpoint{
+    color: blue;
+}
+.accordion-contents .fa-file-alt{
+    color: #f18923;
+}
+.accordion-contents .fa-file-upload{
+    color: #B22222;
+}
+.card-1{
+    background-color: rgb(117, 117, 235);
+}
+.card-2{
+    background-color:#B22222;
+}
+.card-3{
+    background-color: #f18923;
+}
+.card-4{
+    background-color: #000;
+}
+.card-5{
+    background-color: rgb(67, 67, 201);
+}
+.card-6{
+    background-color: #B22222;
+}
+.card-7{
+    background-color: #f18923;
+}
+.card-8{
+    background-color: #000;
+}
+.card-9{
+    background-color: rgb(62, 62, 197);
+}
+.course-1{
+     background-color: rgb(62, 62, 197);
+}
+.course-2{
+    background-color: #B22222;
+}
+.course-3{
+    background-color: #f18923;
+}
+.course-4{
+    background-color: #000;
+}
+.course-5{
+    background-color: rgb(62, 62, 197);
+}
+.course-6{
+    background-color: #B22222;
+}
+.course-7{
+    background-color: #f18923;
+}
+
+.activity{
+    margin-top: 10px;
+}
+.activity,.to-do,.status{
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    margin-bottom: 22px;
+}
+.right-panel{
+    padding: 0 !important;
+}
+.panel-title{
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    display: block;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-family: 'Yusei Magic', sans-serif;
+}
+.to-do-add{
+    float: right;
+    padding: 4px 8px 0px 0px;
+    font-size: 17px;
+    color: #000;
+}
+.to-do-add:hover{
+    color: #000;
+}
+.panel-contents{
+    padding: 0px 8px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.act-contents i{
+    color: 	#B22222;
+    padding-right: 5px;
+}
+.to-do-contents i{
+    color: 	#f18923;
+    padding-right: 5px;
+}
+.status-contents i{
+    color: 	blue;
+    padding-right: 5px;
+}
+.p-c{
+     color: #000 !important;
+     font-weight: bold !important;
+}
+
+.footer-container{
+    background-color: #0c0c0c;
+    position: fixed;
+    bottom: 0px;
+}
+.footer-brand{
+    color: #fff;
+}
+.footer-nav{
+    font-size: 35px;
+}
+.footer-nav .nav-link{
+    color:#fff !important;
+}
+.fixed{
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+.clear{
+    clear: both;
+}
+.sections{
+    position: relative;
+    top: -15px;
+    margin-right: -18px;
+    float: right;
+}
+.sections-text{
+    text-transform: uppercase;
+    color: rgb(235, 231, 231);
+    display: block;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.courses{
+    color: rgb(236, 231, 231) !important;
+}
+.enroll{
+    display: block;
+    margin-top: -40px;
+    float: right;
+    padding: 5px 22px  5px 25px;
+    margin-bottom: 6px;
+    border-radius: 0.5em;
+    text-transform: uppercase;
+    border-color: #000;
+    color: #000;
+    font-weight: bold;
+}
+.enroll:hover{
+    color: #fff;
+    background-color: #000;
+}
+.enroll:active{
+    background-color: none;
+}
+.enroll:focus,.enroll:active{
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #000 !important;
+    color:#fff;
+}
+#datepicker{
+    margin-bottom: 20px;
+}
+#datepicker span{
+    display: inline-block !important;
+}
+.ui-widget-content{
+     width: 262px !important;
+     height:auto;
+     border-radius: 0.5em !important;
+     border: 1px solid #000 !important;
+}
+
+.ui-widget-header {
+    background-color: transparent !important;
+    border: none !important;
+}
+.ui-state-default{
+    border: none !important;
+    background-color: transparent !important;
+    font-size: 12px !important;
+    padding: 8px 10px !important;
+}
+.ui-state-default:hover{
+    background-color: #000 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+}
+.ui-state-active {
+       background-color: #000 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+}
+.ui-state-highlight{
+    color: #fff !important;
+    background-color: #000!important;
+    border-radius: 50% !important;
+}
+.ui-datepicker th {
+    font-size: 12px !important;
+}
+.modules,.calendar{
+    padding-left: 0;
+    font-weight: bold !important;
+    color: #000 !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    text-transform: uppercase;
+}
+.modules:hover,.calendar:hover{
+    color: #000;
+    border-bottom: solid #000 !important;
+}
+
+.act{
+    margin-bottom: 200px;
+}
+   .overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: 100vh;
+        opacity: none;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: block;
+   }
+
+/*Up yeah yeah HAHAHAHA WEB DEVELOPING IS <3*/
+#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #000;
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+      z-index: 100;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top i {
+    color: #FFF;
+    margin: 0;
+    position: relative;
+    left: 16px;
+    top: 13px;
+    font-size: 19px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top:hover {
+    background: #000;
+}
+#return-to-top:hover i {
+    color: #fff;
+    top: 5px;
+}
+
+.drop{
+    display: none;
+}
+
+.nav-item1:last-child:hover .drop{
+    display: block;
+    z-index: 1;
+    position: absolute;
+    top: 50px;
+    margin-left: 20px;
+    height: 100px;
+    width: 183px;
+    text-align: center;
+    cursor: pointer;
+}
+.drop a:hover{
+    background-color: #f18923;
+    transition: ease 0.5s;
+}
+.drop a{
+    padding: 15px 25px 15px 0px;
+    position: relative;
+    top: 25px;
+    background-color: #000;
+}
+
+
+@media screen and (max-width: 992px){
+      #datepicker{
+    margin-left:30% !important;
+    margin-right:30% !important;
+    }
+}
+@media screen and (min-width: 993px) and (max-width: 1200px){
+ .subject{
+   font-size: 13px;
+    }
+  .schedule{
+      font-size: 12px;
+  }
+  .sections-text{
+      margin-top: 20px;
+      font-size: 12px;
+  }
+
+    .btn-link{
+    position: relative;
+    top: -30px;
+    margin-right: -18px;
+    float: right;
+    }
+    .section-1{
+        max-width: 800px;
+    }
+
+    #datepicker{
+    margin-left:35% !important;
+    margin-right:35% !important;
+    }
+}
+@media screen and (max-width: 768px){
+      .nav-1{
+        display:none;
+    }
+        .nav-text{
+            display: inline-block;
+        }
+    .nav-link1 i{
+        padding-right: 5px;
+    }
+
+    .btn-link{
+    position: relative;
+    top: -5px;
+    margin-right: -18px;
+    float: right;
+    }
+
+
+ .nav-item1:last-child:hover .drop{
+    position: relative;
+     top: -25px;
+     left: -40px;
+     transition: ease 0.5s;
+}
+.drop{
+    text-align: center;
+    cursor: pointer;
+    height: 50px !important;
+}
+.drop a{
+    width: 300px !important;
+    cursor: pointer;
+    text-align: left;
+    margin-left: -5px;
+    flex-flow: column wrap;
+    align-content: flex-start;
+    height: 48;
+    width: 300px;
+    padding-left: 40px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.drop a:hover{
+          background-color: #33383E;
+        transition: 0.5s ease;
+}
+    .menu:before{
+            font-size: 22px;
+            content: '\f0c9';
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            cursor: pointer;
+            color: #fff;
+            margin-top: 10px;
+    }
+    .nav-1{
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: -300px;
+        display: flex;
+        background-color: #000;
+        height: 100%;
+        overflow-x: hidden;
+        flex-flow: wrap;
+        align-content: flex-start;
+        width: 300px;
+    }
+    .active1{
+        transform: translateX(-300px);
+        transition: ease 0.5s;
+    }
+    .not-active{
+        transform: translateX(300px);
+        transition: ease 0.5s;
+    }
+    .profile-container{
+        height: 250px;
+        width: 300px;
+        background-image:url('../images/main-bg-3.jpg');
+        background-size: cover;
+        background-image: no-repeat;
+        background-position: center;
+    }
+    .close:before{
+        font-family: "Font Awesome 5 Free";
+        content: "\f00d";
+        font-weight: 900;
+        font-size: 30px;
+        position: absolute;
+        top:0;
+        left:0;
+        margin: 15px 0px 0px 15px;
+        color: #fff;
+        cursor: pointer;
+    }
+    .circle{
+        width: 180px;
+        height:180px;
+        background-image: url('../images/profile.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        position: relative;
+        top: 20px;
+        left: 60px;
+    }
+    .nav-item1{
+        width: 300px;
+        font-size: 20px;
+    }
+    .nav-item1:last-child{
+        margin-top: -40px;
+    }
+    .nav-item1{
+        padding-left: 25px;
+    }
+
+    .nav-item1:hover:not(:last-child){
+        background-color: #33383E;
+        transition: 0.5s ease;
+    }
+   .nav-item1:nth-of-type(1){
+       order: 3;
+   }
+    .nav-item1:nth-of-type(2){
+       order: 4;
+   }
+    .nav-item1:nth-of-type(3){
+       order: 5;
+   }
+    .nav-item1:nth-of-type(4){
+       order: 6;
+   }
+    .nav-item:nth-of-type(5){
+       order: 2;
+   }
+   .nav-item:nth-of-type(6){
+       order: 1;
+   }
+
+   .title,.subject,.schedule{
+    text-transform: uppercase;
+    color: #fff;
+    display: block;
+    margin-left: -10px;
+}
+.subject,.schedule,.sections-text{
+   font-size: 12px;
+}
+.title{
+    display: block;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+.section-1{
+    padding: 15px !important;
+}
+ .sections-text{
+      margin-top: 25px;
+      font-size: 12px;
+  }
+ .course{
+     margin-top: 5px;
+ }
+     #datepicker{
+    margin-left:20% !important;
+    margin-right:20% !important;
+    }
+
+}

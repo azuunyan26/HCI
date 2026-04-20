@@ -1,0 +1,508 @@
+<?php
+// Logic moved to the top to fix "headers already sent" warning
+session_start();
+require('dbconnector.php');
+
+$login_error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+    // removes backslashes
+    $username = stripslashes($_REQUEST['username']);
+    $password = stripslashes($_REQUEST['password']);
+    $role = stripslashes($_REQUEST['role']);
+
+    // escapes special characters in a string
+    $username = mysqli_real_escape_string($con, $username);
+    $password = mysqli_real_escape_string($con, $password);
+    $role = mysqli_real_escape_string($con, $role);
+
+    // checking the database using the role selected by user
+    $query = "";
+    switch ($role) {
+        case 'Student':
+            $query = "SELECT * FROM student_info WHERE username = '$username' and password = '$password'";
+            break;	
+        case 'Faculty':
+            $query = "SELECT * FROM faculty_info WHERE username = '$username' and password = '$password'";
+            break;
+        case 'Administrator':
+            $query = "SELECT * FROM admin_info WHERE username = '$username' and password = '$password'";
+            break;
+    }
+
+    if ($query != "") {
+        $result = mysqli_query($con, $query) or die(mysqli_error($con));
+        $rows = mysqli_num_rows($result);
+
+        if ($rows == 1) {
+            $user_data = mysqli_fetch_array($result);
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = $role;
+            $action = "Login";
+            $_SESSION['actiontime'] = $actiontime = date_create()->format('Y-m-d H:i:s');
+
+            mysqli_query($con, "INSERT into userlog(username,role,action,actiontime) values('$username','$role','$action','$actiontime')");
+
+            if (!empty($_POST["remember"])) {
+                setcookie("username", $_POST["username"], time() + (10 * 365 * 24 * 60 * 60));
+                setcookie("password", $_POST["password"], time() + (10 * 365 * 24 * 60 * 60));
+                setcookie("role", $_POST["role"], time() + (10 * 365 * 24 * 60 * 60));
+            } else {
+                setcookie("username", "");
+                setcookie("password", "");
+                setcookie("role", "");
+            }
+
+            // redirect user based on their role
+            $extra = "";
+            switch ($role) {
+                case 'Student':
+                    $extra = 'studentdashboard.php';
+                    break;
+                case 'Faculty':
+                    $extra = 'facultydashboard.php';
+                    break;
+                case 'Administrator':
+                    $extra = 'admindashboard1.php';
+                    break;
+            }
+
+            if ($extra != "") {
+                $host = $_SERVER['HTTP_HOST'];
+                $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+                header("location:http://$host$uri/$extra");
+                exit();
+            }
+        } else {
+            $login_error = "Invalid credentials. Prove your status and try again.";
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hustler's Unversity [sic] | Home</title>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<style>
+		.navbar-1 { transition: all 0.3s; }
+		.hero-content { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+		.display-1 { text-shadow: 2px 2px 10px rgba(255,0,0,0.5); }
+		.modal-content { border-radius: 15px; height: auto !important; }
+		.profile-icon-container { background: #dc3545; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+		.testimonial { padding: 20px; background: #222; border-left: 4px solid #dc3545; border-radius: 5px; color: #fff !important; }
+		.footer-container { background: #000; border-top: 2px solid #dc3545; }
+		.btn-danger { box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4); }
+		.form-control:focus { background-color: #333; color: #fff; border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+		.login-gif { border: 2px solid #dc3545; box-shadow: 0 0 15px rgba(220, 53, 69, 0.3); }
+		#signinModal .modal-body { padding: 1.5rem 2rem; }
+		.error-msg { 
+			background: rgba(220, 53, 69, 0.1);
+			border: 1px solid #dc3545;
+			padding: 10px;
+			border-radius: 5px;
+		}
+	</style>
+</head>
+
+<body data-spy="scroll" data-target="#navbar_1" data-offset="50">
+	<div class="container-fluid navbar-1">
+		<div class="container">
+			<div class="navbar" id="navbar_1">
+				<div class="navbar-brand">
+					<img class="logo-img" src="images/qcuLogo.png" style="filter: grayscale(1) contrast(200%) brightness(50%);">
+					<span class="logo-text">Hustler's Unversity [sic]</span>
+				</div>
+				<div class="menu"></div>
+				<ul class="nav nav1">
+					<div class="close-btn"></div>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1 font-weight-bold" href="#announcement">Gazette</a>
+					</li>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1" href="#calendar">Calendar</a>
+					</li>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1" href="#about">Success Stories</a>
+					</li>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1" href="#faq">The Mindset</a>
+					</li>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1" href="apply.php">Apply Now</a>
+					</li>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1 text-danger font-weight-bold" href="alpha_exam.php">Alpha Exam</a>
+					</li>
+					<li class="nav-item nav-item1">
+						<a class="nav-link nav-link1 btn btn-outline-danger btn-sm ml-lg-2" data-toggle="modal" data-target="#signinModal">Ascend (Login)</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- Parody Modals (Enhanced Visuals) -->
+	<div class="modal fade" id="callModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark text-white border border-danger shadow-lg">
+				<div class="modal-header border-danger">
+					<h5 class="modal-title">📞 OUTGOING CALL...</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnR6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GjB41JotUyeWLhMh0p/giphy.gif" class="img-fluid mb-3 rounded" alt="Phone Call">
+					<p class="lead font-italic">*Muffled sounds of a middle-aged man grunting aggressively into a receiver*</p>
+					<p class="text-danger font-weight-bold">"Broke Sigma detected. Connection terminated."</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="enrollModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark text-white border border-danger shadow-lg">
+				<div class="modal-header border-danger">
+					<h5 class="modal-title">💸 ENROLLMENT PENDING</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZleHgyYzd0eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6eXN6ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKDkDbIDJieKbVm/giphy.gif" class="img-fluid mb-3 rounded" alt="Money Exchange">
+					<h3 class="text-danger font-weight-bold">TRUST THE PROCESS.</h3>
+					<p class="lead">Just send the tuition directly to my Venmo, bro. I'll whitelist your brain manually. Don't be a brokeboy.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="missionModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark text-white border border-danger shadow-lg">
+				<div class="modal-header border-danger bg-danger">
+					<h5 class="modal-title">🤝 Hustler Mission</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXZueXpueHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LdOyjZ7TC5K3LghioZ/giphy.gif" class="img-fluid mb-3" alt="Money Rain">
+					<p>To extract tuition from insecure young men faster than they can say "financial independence." We promise to teach you nothing useful, blame you for your own failures, and look really cool while doing it.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="visionModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark text-white border border-danger shadow-lg">
+				<div class="modal-header border-danger bg-danger">
+					<h5 class="modal-title">👁️ Hustler Vision</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<div class="embed-responsive embed-responsive-16by9 mb-3">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ" allowfullscreen></iframe>
+					</div>
+					<p>To create a world where every man owns a poorly lit YouTube studio, a leather bracelet, and the unshakable belief that his failed dropshipping store is about to "moon."</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="mindsetModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content bg-dark text-white border border-danger shadow-lg">
+				<div class="modal-header border-danger bg-danger">
+					<h5 class="modal-title">🐺 Alpha Mindset</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXZueXpueHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/D7z8JfNANqahW/giphy.gif" class="img-fluid mb-3" alt="Wolf Howl">
+					<p class="font-weight-bold">"Weakness is a choice. (So is bad breath. Choose both.)"</p>
+					<p>The grind doesn't sleep. (But we do, from 2 AM to 4 PM.) You are the captain of your own sinking ship.</p>
+					<hr class="border-secondary">
+					<p class="italic text-danger">Daily Affirmation: "I am the prize. I am the storm. I am currently overdrawn at the bank."</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="signinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content bg-dark text-white border border-danger shadow-lg">
+				<div class="modal-header border-danger justify-content-center position-relative">
+					<h5 class="modal-title text-danger font-weight-bold w-100 text-center" id="exampleModalLabel">⚡ ACCESS THE TOP 1% ⚡</h5>
+					<button type="button" class="close text-white position-absolute" style="right: 15px; top: 15px;" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXZueXpueHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeHlyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LdOyjZ7TC5K3LghioZ/giphy.gif" class="img-fluid mb-4 rounded login-gif" style="max-height: 120px;" alt="Alpha Grind">
+					
+					<?php if ($login_error): ?>
+						<div class="error-msg text-danger mb-3 small">
+							<i class="fas fa-exclamation-triangle mr-2"></i><?php echo $login_error; ?>
+						</div>
+					<?php endif; ?>
+
+					<form name="login" method="post" class="px-3">
+							<div class="profile-icon-container">
+								<i class="profile fas fa-user-shield text-white fa-2x"></i>
+							</div>
+							<div class="form-group mb-3">
+								<select class="custom-select" name="role" id="rol">
+									<option value="Administrator" selected> Sigma Leader (Admin) </option>
+									<option value="Student"> Student </option>
+									<option value="Faculty"> Alpha Instructor </option>
+								</select>
+							</div>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text user bg-danger border-danger text-white" id="basic-addon1"><i class="fas fa-user"></i></span>
+								</div>
+								<input type="text" class="form-control username bg-secondary text-white border-0" placeholder="Enter Username" name="username" value="<?php if(isset($_COOKIE['username'])) echo $_COOKIE['username']; ?>" required>
+							</div>
+
+							<div class="input-group mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text pass bg-danger border-danger text-white" id="basic-addon1"><i class="fas fa-key"></i></span>
+								</div>
+								<input class="form-control password bg-secondary text-white border-0" type="password" placeholder="Enter Password" id="myInput" name="password" value="<?php if(isset($_COOKIE['password'])) echo $_COOKIE['password']; ?>" required>
+							</div>
+							<br>
+			<div class="text-left mt-2">
+				<input type="checkbox" onclick="myFunction()"> <small>Show Password</small>
+			</div>
+			<script>
+				function myFunction() {
+			   var x = document.getElementById("myInput");
+			  if (x.type === "password") {
+			    x.type = "text";
+			  } else {
+			    x.type = "password";
+			  }
+			}
+			</script>
+
+							<div class="custom-control custom-checkbox mt-3 text-left">
+								<input type="checkbox" class="custom-control-input" name="remember" id="customCheck1" <?php if(isset($_COOKIE["user"])) { ?> checked <?php }?>/>
+								<label class="custom-control-label" for="customCheck1">Stay Logged in (Forever Grind)</label>
+							</div>
+							<div class="mt-4">
+								<button type="submit" class="btn btn-danger btn-lg btn-block font-weight-bold shadow-sm" name="login">ASCEND NOW</button>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section class="section-1 bg-dark text-white">
+		<div class="container-fluid main py-5">
+			<div class="container hero-content">
+				<h1 class="display-1">STOP SCROLLING. YOUR BETA BRAIN IS SHOWING.</h1>
+				<p class="tagline text-white">Finally. A place for men who peaked in 2016 skinny jeans and rage comics.</p>
+				<div class="row">
+					<div class="col">
+						<p class="lead">Don’t just think you’re an Alpha. Prove it by giving us your credit card number.</p>
+						<a class="btn btn-primary header-btn border-0 shadow" href="#" data-toggle="modal" data-target="#callModal" style="background: linear-gradient(45deg, #ff0000, #990000);">📞 CALL 1-800-IM-ALPHA NOW!!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-2" id="about">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 about-title">
+					<h1 class="display-1">TESTIMONIALS</h1>
+				</div>
+				<div class="col-md-6 about-text ">
+					<div class="testimonial">
+						<p class="italic">"Before Hustler's Unversity, I only cried 3 times a week. Now, after the 48-hour 'No Eye Contact' challenge, I cry 0 times a week (I have simply lost the ability to feel). My wife left me. My dog is scared. I am finally free."</p>
+						<p class="strong">— Chad Thundercock, Valedictorian of 'Soy Boy Elimination'</p>
+					</div>
+					<hr>
+					<div class="testimonial">
+						<p class="italic">"The 'Gym Guide' taught me that if you don't grunt while lifting a gallon of milk, you are literally a communist. I now own 12 crypto shirts and no actual crypto. 5 stars."</p>
+						<p class="strong">— Tate Wannabe, Class of '23</p>
+					</div>
+					<hr>
+					<div class="testimonial">
+						<p class="italic">"I called the number to enroll. A man answered, called me a 'broke sigma,' and hung up. Best $5,000 I never spent. The mindset is real."</p>
+						<p class="strong">— Kyle, Assistant Manager (Formerly Assistant TO the Manager)</p>
+					</div>
+				</div>
+			</div> <!-- /row -->
+		</div>
+	</section>
+
+	<section class="courses py-5" id="courses">
+		<div class="container">
+			<h1 class="display-3 text-center mb-5">Semester 1: The Grind.</h1>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="card shadow-sm mb-4">
+						<div class="card-body text-center">
+							<h5 class="card-title font-weight-bold">Crypto & Scams</h5>
+							<p class="card-text">Learn to use big words like "blockchain" and "liquidity" while borrowing from your mother.</p>
+							<button class="btn btn-danger btn-block" data-toggle="modal" data-target="#enrollModal">ENROLL NOW!</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card shadow-sm mb-4">
+						<div class="card-body text-center">
+							<h5 class="card-title font-weight-bold">Sunglasses Indoors</h5>
+							<p class="card-text">Why make eye contact when you can look like a rejected member of a 2000s boy band?</p>
+							<button class="btn btn-danger btn-block" data-toggle="modal" data-target="#enrollModal">ENROLL NOW!</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card shadow-sm mb-4">
+						<div class="card-body text-center">
+							<h5 class="card-title font-weight-bold">B.S. in Dropshipping</h5>
+							<p class="card-text">Friendship is temporary. Commission is forever (unless you don't sell anything, which you won't).</p>
+							<button class="btn btn-danger btn-block" data-toggle="modal" data-target="#enrollModal">ENROLL NOW!</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card shadow-sm mb-4">
+						<div class="card-body text-center">
+							<h5 class="card-title font-weight-bold">B.A. in Motivational Speaking</h5>
+							<p class="card-text">Learn to delegate your chores to your little sister while you watch motivational reels.</p>
+							<button class="btn btn-danger btn-block" data-toggle="modal" data-target="#enrollModal">ENROLL NOW!</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="mvh" id="faq">
+		<div class="containers qcu-mvh">
+			<!--mvh mission, vission, hymn-->
+			<div class="row justify-content-center">
+				<div class="col-md-3">
+					<div class="card border-0 qcu-mvh-mem">
+						<!-- mem for invidual box -->
+						<a href="#" data-toggle="modal" data-target="#missionModal">
+							<img class="card-img-top img-fluid" src="images/Mission.jpg" alt="🤝 Hustler Mission">
+						</a>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card border-0 qcu-mvh-mem">
+						<a href="#" data-toggle="modal" data-target="#visionModal">
+							<img class="card-img-top img-fluid" src="images/Vision.jpg" alt="👁️ Hustler Vision">
+						</a>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card border-0 qcu-mvh-mem">
+						<a href="#" data-toggle="modal" data-target="#mindsetModal">
+							<img class="card-img-top img-fluid" src="images/QCU-Hymn.jpg" alt="🐺 Alpha Mindset">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="announcements py-5" id="announcement">
+		<div class="container a-main">
+			<h1 class="display-3 a-text mb-4 text-center">📰 THE HUSTLER GAZETTE</h1>
+			<div class="row">
+				<div class="col-md-6 mb-4">
+					<div class="card p-3 h-100">
+						<h3 class="text-danger">Truth Pills (Conspiracy Theories)</h3>
+						<p class="mb-1"><em>"Birds aren't real, but neither are your gains if you skip leg day."</em></p>
+						<p class="mb-1"><em>"The government puts fluoride in the water to make you say 'please' and 'thank you.' Real Alphas drink raw sewage."</em></p>
+						<p><em>"Sleep is a Beta construct. True Hustlers run on 17 minutes of rage and a Monster Energy Zero."</em></p>
+					</div>
+				</div>
+				<div class="col-md-6 mb-4">
+					<div class="card p-3 h-100">
+						<h3 class="text-danger">How to Achieve Masculinity</h3>
+						<p>Step 1: Own a grunting sound for every basic human emotion.</p>
+						<p>Step 2: Wear jewelry that turns your skin green.</p>
+						<p>Step 3: Never apologize. Blame the puppy.</p>
+						<p>Step 4: Profit? (No. Just vibes).</p>
+					</div>
+				</div>
+				<div class="col-md-6 mb-4">
+					<div class="card p-3 h-100">
+						<h3 class="text-danger">Relationship 101 (The Alpha Way)</h3>
+						<p>Rule #1: Wait 3 business days to reply to a text.</p>
+						<p>Rule #2: Respond to feelings with "I feel like the Wolf of Wall Street."</p>
+						<p>Rule #3: The "Hustler's Split": You pay 0%. She pays 100%.</p>
+					</div>
+				</div>
+				<div class="col-md-6 mb-4">
+					<div class="card p-3 h-100">
+						<h3 class="text-danger">Gym Guide</h3>
+						<p>Chest Day: smith machine only. Curl in the squat rack.</p>
+						<p>Leg Day: Skip it. Chicken legs = Massive egos.</p>
+						<p>Supplements: Dry scoop pre-workout until you see sounds.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="school-calendar" id="calendar">
+		<div class="container text-center">
+			<h1 class="display-1 s-c">School Calendar</h1>
+			<img src="images/qcu-calendar.png" alt="">
+		</div>
+	</section>
+
+    <footer class="container-fluid footer-container py-5 bg-dark border-top border-danger shadow-lg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="footer-brand mb-4 text-white-50 small">
+                        <p class="mb-0">© 2024 Hustler's Unversity [sic]. Not accredited by any known body.</p>
+                        <p>All sales final. No refunds. Crying in the walk-in cooler is encouraged.</p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="#" class="text-danger mx-3"><i class="fab fa-facebook-square fa-2x"></i></a>
+                        <a href="#" class="text-danger mx-3"><i class="fab fa-twitter-square fa-2x"></i></a>
+                        <a href="#" class="text-danger mx-3"><i class="fab fa-instagram-square fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+	<a href="javascript:" id="return-to-top"><i class="fas fa-chevron-up"></i></a>
+
+
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/login.js"></script>
+</body>
+
+</html>
